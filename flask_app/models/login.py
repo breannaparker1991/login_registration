@@ -1,4 +1,3 @@
-from msilib.schema import Class
 from flask import flash
 import re
 from flask_app.config.mysqlconnection import connectToMySQL
@@ -22,14 +21,19 @@ class Login:
   
   @classmethod
   def save(cls,data):
-    query = "INSERT INTO users (username, password) VALUES (%(username)s, %(password)s);"
-    return connectToMySQL("mydb").mysql.query_db(query, data)
+    query = "INSERT INTO user (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);"
+    return connectToMySQL(cls.db).query_db(query, data)
 
+  @classmethod
+  def get_one(cls,data):
+    query = "SELECT * FROM user WHERE id = %(id)s;"
+    results = connectToMySQL(cls.db).query_db(query,data)
+    return cls(results[0])
 
   @classmethod
   def get_by_email(cls,data):
-    query = "SELECT * FROM users WHERE email = %(email)s;"
-    result = connectToMySQL("mydb").query_db(query,data)
+    query = "SELECT * FROM user WHERE email = %(email)s;"
+    result = connectToMySQL(cls.db).query_db(query,data)
       # Didn't find a matching user
     if len(result) < 1:
       return False  
@@ -39,5 +43,19 @@ class Login:
   def validate(user):
     is_valid = True
     if len(user['password']) < 7:
+      flash('Password needs to be at least 7 characters')
       is_valid = False
+    if user['password'] != user['confirm_password']:
+      flash('Passwords must match')
+      is_valid = False
+    if len(user['first_name']) < 2:
+      flash('First name must be at least 2 characters')
+      is_valid = False
+    if len(user['last_name']) < 2:
+      flash('Last name must be at lest 2 characters')
+      is_valid = False
+    if not EMAIL_REGEX.match(user['email']):
+      flash('Please enter a valid email address')
+      is_valid = False
+    return is_valid
     
