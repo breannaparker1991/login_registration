@@ -11,9 +11,26 @@
 <title>Title</title>
 </head>
 <body>
-  <div class="col-4 bg-dark p-4 my-5 mx-auto text-light">
-  <h1 class="mx-auto text-primary">Welcome  {{user.first_name}}</h1>
-  <a href="/logout" class="btn btn-primary">Logout</a>
+  <div class="d-flex">
+    <div class="">
+      <h1 class="mx-auto text-primary">Welcome Coding Dojo Wall</h1>
+      <div class="col-4 bg-dark p-4 my-5 mx-auto text-light text-decoration-underline"> messages for you
+        {% for one_message in all_messages %}
+          <h6>{{one_message.creator.first_name}}</h6>
+          <p>{{one_message.comment}}</p>
+        {% endfor %}
+      </div>
+    </div>
+    <div>
+      <h1 class="mx-auto text-primary">Welcome  {{user.first_name}}</h1> <a href="/logout" class="btn btn-primary">Logout</a>
+      <div class="col-4 bg-dark p-4 my-5 mx-auto text-light">
+        <h3>Send A Message:</h3>
+        <form action="/message">
+          {{user.first_name}} <input type="text" name="text" id="text" cols="50" rows="10">
+          <input type="Submit" name="Send" id="Send">
+        </form>
+      </div>
+    </div>
   </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
