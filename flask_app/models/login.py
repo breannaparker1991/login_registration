@@ -48,13 +48,18 @@ class Login:
     if user['password'] != user['confirm_password']:
       flash('Passwords must match')
       is_valid = False
+    # elif user['password']
+    #   flash('Passwords must have at least one Upper Case letter')
+    #   is_valid = False
     if len(user['first_name']) < 2:
       flash('First name must be at least 2 characters')
       is_valid = False
     if len(user['last_name']) < 2:
       flash('Last name must be at lest 2 characters')
       is_valid = False
-    if not EMAIL_REGEX.match(user['email']):
+    if EMAIL_REGEX.match(user['email']):
+      flash("Email is already taken!")
+    elif not EMAIL_REGEX.match(user['email']):
       flash('Please enter a valid email address')
       is_valid = False
     return is_valid

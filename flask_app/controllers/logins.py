@@ -8,13 +8,12 @@ bcrypt = Bcrypt(app)
 
 @app.route('/')
 def index():
-  return render_template("index.html", messages = get_flashed_messages())
+  return render_template("index.html")
 
 @app.route('/register', methods=['POST'])
 def register():
   if not Login.validate(request.form):
     return redirect('/')
-  
   pw_hash = bcrypt.generate_password_hash(request.form['password'])
   print(pw_hash)
   data = {

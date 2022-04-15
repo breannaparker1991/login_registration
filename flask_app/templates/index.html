@@ -11,12 +11,13 @@
 <title>Title</title>
 </head>
 <body>
-    {% if messages %}
-      {% for message in messages %}
-        <p>{{message}}</p>
-      {% endfor %}
-    {% endif %}
+
   <form action="/register" method="POST" class="col-4 bg-dark p-4 my-5 mx-auto text-light">
+      {% if messages %}
+        {% for message in messages %}
+          <p>{{message}}</p>
+        {% endfor %}
+      {% endif %}
     <h1>Register Here</h1>
     <div>
       <label for="first_name">First Name</label>
@@ -40,6 +41,26 @@
     </div>
     <input type="Submit" name="Submit" id="Submit" class="btn btn-primary">
   </form>
+
+
+  <form action="/login" method="POST" class="col-4 bg-dark p-4 my-5 mx-auto text-light">
+    {% if messages %}
+      {% for message in messages %}
+        <p>{{message}}</p>
+      {% endfor %}
+    {% endif %}
+  <h1>Login</h1>
+  <div>
+    <label for="email">Email</label>
+    <input type="text" name="email" id="email">
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password">
+  </div>
+  <input type="Submit" name="Submit" id="Submit" class="btn btn-primary">
+</form>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
