@@ -15,11 +15,13 @@
       <h1 class="mx-auto text-primary">Welcome Coding Dojo Wall</h1>
       <div class="d-flex">
         <div class="col-4 bg-dark p-4 my-5 mx-auto text-light text-decoration-underline"> 
-          <h3>{{message|length}} messages for you</h3>
+          <h3>{{messages|length}} messages for you</h3>
           {% for message in messages %}
-            <h6>{{message.send}}:</h6>
+            <h6>{{message.sender}}:</h6>
             <p>{{message.comment}}</p>
+            <a href="/destroy/{{message.id}}">Delete</a>
           {% endfor %}
+          
         </div>
     </div>
     </div>

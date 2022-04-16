@@ -67,6 +67,9 @@ class Login:
     if len(user['last_name']) < 2:
       flash('Last name must be at lest 2 characters')
       is_valid = False
+    if EMAIL_REGEX.match(user['email']):
+      flash('Email is already taken!')
+      is_valid = False
     if not EMAIL_REGEX.match(user['email']):
       flash('Please enter a valid email address')
       is_valid = False

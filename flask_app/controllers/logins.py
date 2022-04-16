@@ -21,10 +21,11 @@ def register():
     "email": request.form['email'],
     "password" : pw_hash
   }
-  session['user_id'] = Login.save(data)
-  if not Login.save(data):
+  id = Login.save(data)
+  if not id:
     flash("Email already taken, please register")
     return redirect('/')
+  session['user_id'] = id
   return redirect("/dashboard")
 
 @app.route('/login', methods=['POST'])

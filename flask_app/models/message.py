@@ -18,7 +18,7 @@ class Message:
     
   @classmethod
   def save(cls,data):
-    query = "INSERT INTO Message (comment, sender_id, receiver_id, updated_at, created_at) VALUES (%(comment)s, %(sender_id)s, %(receiver_id)s, NOW(), NOW())" 
+    query = "INSERT INTO message (comment, sender_id, receiver_id, updated_at, created_at) VALUES (%(comment)s, %(sender_id)s, %(receiver_id)s, NOW(), NOW())" 
     return connectToMySQL(cls.db).query_db(query,data)
   
   @classmethod
