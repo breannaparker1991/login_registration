@@ -1,9 +1,8 @@
-from dataclasses import dataclass
-from pkg_resources import require
 from flask_app import app
-from flask import get_flashed_messages, redirect, request, render_template, session,  flash
+from flask import redirect, request, render_template, session, flash
 from flask_app.models.login import Login
 from flask_bcrypt import Bcrypt
+from flask_app.models.message import Message
 bcrypt = Bcrypt(app)
 
 @app.route('/')
@@ -23,6 +22,9 @@ def register():
     "password" : pw_hash
   }
   session['user_id'] = Login.save(data)
+  if not Login.save(data):
+    flash("Email already taken, please register")
+    return redirect('/')
   return redirect("/dashboard")
 
 @app.route('/login', methods=['POST'])
@@ -45,7 +47,10 @@ def dashboard():
   data = {
     'id': session['user_id']
   }
-  return render_template("dashboard.html", user = Login.get_one(data))
+  messages = Message.all_messages(data)
+  users = Login.get_all()
+  user = Login.get_one(data)
+  return render_template("dashboard.html", users=users, messages=messages, user=user)
   
 @app.route('/logout')
 def logout():

@@ -11,24 +11,36 @@
 <title>Title</title>
 </head>
 <body>
-  <div class="d-flex">
-    <div class="">
+    <div>
       <h1 class="mx-auto text-primary">Welcome Coding Dojo Wall</h1>
-      <div class="col-4 bg-dark p-4 my-5 mx-auto text-light text-decoration-underline"> messages for you
-        {% for one_message in all_messages %}
-          <h6>{{one_message.creator.first_name}}</h6>
-          <p>{{one_message.comment}}</p>
-        {% endfor %}
-      </div>
+      <div class="d-flex">
+        <div class="col-4 bg-dark p-4 my-5 mx-auto text-light text-decoration-underline"> 
+          <h3>{{message|length}} messages for you</h3>
+          {% for message in messages %}
+            <h6>{{message.send}}:</h6>
+            <p>{{message.comment}}</p>
+          {% endfor %}
+        </div>
+    </div>
     </div>
     <div>
       <h1 class="mx-auto text-primary">Welcome  {{user.first_name}}</h1> <a href="/logout" class="btn btn-primary">Logout</a>
-      <div class="col-4 bg-dark p-4 my-5 mx-auto text-light">
-        <h3>Send A Message:</h3>
-        <form action="/message">
-          {{user.first_name}} <input type="text" name="text" id="text" cols="50" rows="10">
-          <input type="Submit" name="Send" id="Send">
-        </form>
+      <div class="d-flex">
+        <div class="col-4 bg-dark p-4 my-5 mx-auto text-light">
+          <h3>Send A Message:</h3>
+          {% for u in users %}
+            {% if u.id != session.user_id %}
+              <form action="/message" method="POST">
+                <input type="hidden" name="sender_id" value={{session.user_id}}> 
+                <input type="hidden" name="receiver_id" value={{u.id}}>
+                <label for="receiver_id"> Message{{u.first_name}}:</label>
+                <textarea name="comment" cols="30" rows="10" class="form-control"></textarea>
+                <input type="Submit" name="Send" value="Message" class="btn btn-primary">
+              </form>
+            {% endif %}
+          {% endfor %}
+
+      </div>
       </div>
     </div>
   </div>
